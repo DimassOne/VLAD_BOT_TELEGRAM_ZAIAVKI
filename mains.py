@@ -52,6 +52,8 @@ def user_reg(message):
 def process_city_step(message)->str:
     try:
         chat_id = message.chat.id
+        with open('text.txt','w') as list:
+            list.write('Ваш город ' + message.text + '\n')
         user_dict[chat_id] = User(message.text)
         markup = types.ReplyKeyboardRemove()
         msg = bot.send_message(chat_id, 'Введите вашу фамилию и имя', reply_markup=markup)
@@ -78,6 +80,8 @@ def process_fullname_step(message):
     try:
         chat_id = message.chat.id
         user = user_dict[chat_id]
+        with open('text.txt','a') as list:
+            list.write('Ваше имя ' + message.text + '\n')
         user.fullname = message.text
         msg = bot.send_message(chat_id, 'Введите номер телефона: ')
         bot.register_next_step_handler(msg, process_phone_step)
